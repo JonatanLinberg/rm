@@ -8,12 +8,13 @@ root = Tk()
 sqside = 50
 xsq = 8
 ysq = 8
+loadedchunks = 9
 
 wwidth = xsq * sqside
 wheight = ysq* sqside
 
 #declare arrays
-square = [["" for y in range(ysq)] for x in range(xsq)]
+chunk = [[["" for y in range(ysq)] for x in range(xsq)] for c in range(loadedchunks)]
 
 #Player
 px = 0
@@ -22,7 +23,20 @@ py = 0
 w = Canvas(root, width=wwidth, height=wheight, highlightthickness=0)
 w.pack()
 
-def move(event)
+def move(event):
+	print ("hej")
+
+def genWorld():
+	for c in range(loadedchunks):
+		for x in range(xsq):
+			for y in range(ysq):
+				chunk[c][x][y] = (str(c) + str(x) + str(y))
+
+
+def init():
+	genWorld()
+	print ("chunk " + chunk[3][2][1])
+
 	
 
 root.bind('<Up>', move)
