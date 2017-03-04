@@ -39,8 +39,8 @@ def init():
 	print ("chunk " + chunk[3][2][1])
 
 def pause(event):
-	msb = messagebox()
-	
+	if (messagebox.askquestion('Please don\'t go','Are you sure you want to exit?')=='yes'):
+		sys.exit()
 
 	
 root.bind('<Escape>', pause)
