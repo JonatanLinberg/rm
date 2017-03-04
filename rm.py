@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.6
 
 from tkinter import *
+from tkinter import messagebox
 
 root = Tk()
 
@@ -37,8 +38,12 @@ def init():
 	genWorld()
 	print ("chunk " + chunk[3][2][1])
 
+def pause(event):
+	msb = messagebox()
 	
 
+	
+root.bind('<Escape>', pause)
 root.bind('<Up>', move)
 root.bind('<Down>', move)
 root.bind('<Left>', move)
