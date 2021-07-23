@@ -48,6 +48,14 @@ cl5.image = cake
 cl6 = Label(image=cake, width = 40, height = 40)
 cl6.image = cake
 
+pts_str = StringVar()
+pts_label = Label(textvariable=pts_str)
+pts_label.place(x=0, y=0)
+
+
+def update_pts_label():
+	global points
+	pts_str.set("You have eaten %d cakes."%(points))
 
 def Left(e):
 	global pos
@@ -126,6 +134,7 @@ def loop():
 			cakeArray[r] = True	
 
 		label.place(x = 60 + (pos * 40), y = 200)
+		update_pts_label()
 
 		root.after(20, loop)
 
