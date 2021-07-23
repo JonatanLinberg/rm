@@ -1,2 +1,5 @@
 # Rasmus födelsedagsprogram
-This github repository is a bit of a mess, but a MacOS App is easily available from the [releases](https://github.com/JonatanLinberg/rm/releases/v1.0/) page.
+
+## 1.0 - Full Release
+- [MacOS App](https://github.com/JonatanLinberg/rm/releases/download/v1.0/Grattis.Rasmus.app.zip)
+- [Python2.7](https://github.com/JonatanLinberg/rm/releases/download/v1.0/rm.py)
