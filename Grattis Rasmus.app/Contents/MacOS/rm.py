@@ -1,10 +1,11 @@
 #!/usr/bin/env python2.7
-
 from Tkinter import *
 from random import randint
 import tkMessageBox
 from os import system
+import sys
 
+resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
 pos = 3
 count = 1
 cakeArray = [False for c in range(0, 7)]
@@ -16,9 +17,9 @@ root = Tk()
 root.resizable(width=False, height=False)
 root.geometry("400x300")
 
-img = PhotoImage(file = "./rsrc/rasmus.gif")
-cake = PhotoImage(file = "./rsrc/cake.gif")
-bg = PhotoImage(file = "./rsrc/bg.gif")
+img = PhotoImage(file = resourcePath + "rasmus.gif")
+cake = PhotoImage(file = resourcePath + "cake.gif")
+bg = PhotoImage(file = resourcePath + "bg.gif")
 
 bgl = Label(image=bg, width = 400, height = 300)
 bgl.image = bg # keep a reference!
@@ -48,14 +49,6 @@ cl5.image = cake
 cl6 = Label(image=cake, width = 40, height = 40)
 cl6.image = cake
 
-pts_str = StringVar()
-pts_label = Label(textvariable=pts_str)
-pts_label.place(x=0, y=0)
-
-
-def update_pts_label():
-	global points
-	pts_str.set("You have eaten %d cakes."%(points))
 
 def Left(e):
 	global pos
@@ -134,7 +127,6 @@ def loop():
 			cakeArray[r] = True	
 
 		label.place(x = 60 + (pos * 40), y = 200)
-		update_pts_label()
 
 		root.after(20, loop)
 
