@@ -106,15 +106,12 @@ def loop():
 			gameOver()
 		count -= 1
 		if count <= 0:
-			c = 60 - points * 3
-			if c < 20:
-				c = 20
-			count = c
-			a = True
-			while (a):
+			count = randint(20, 50)/(0.05 * points + 1) + randint(10, 20)
+
+			while (True):
 				r = randint(0, 6)
 				if cakeArray[r] == False:
-					a = False
+					break
 
 			if r == 0:
 				cl0.place(x = 60, y = 100)
