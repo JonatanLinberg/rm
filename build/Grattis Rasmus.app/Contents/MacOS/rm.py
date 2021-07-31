@@ -5,7 +5,10 @@ import tkMessageBox
 from os import system
 import sys
 
-resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
+if (sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
+	resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
+else:
+	resourcePath = sys.path[0]+'/rsrc/'
 pos = 3
 count = 1
 cakeArray = [False for c in range(0, 7)]
@@ -51,7 +54,6 @@ cl6.image = cake
 
 
 pts_str = StringVar()
-pts_str.set(resourcePath)
 pts_label = Label(textvariable=pts_str)
 pts_label.place(x=0, y=0)
 
@@ -134,7 +136,7 @@ def loop():
 			cakeArray[r] = True	
 
 		label.place(x = 60 + (pos * 40), y = 200)
-		#update_pts_label()
+		update_pts_label()
 
 		root.after(20, loop)
 

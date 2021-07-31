@@ -1,10 +1,14 @@
 #!/usr/bin/env python2.7
-
 from Tkinter import *
 from random import randint
 import tkMessageBox
 from os import system
+import sys
 
+if (sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
+	resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
+else:
+	resourcePath = sys.path[0]+'/rsrc/'
 pos = 3
 count = 1
 cakeArray = [False for c in range(0, 7)]
@@ -16,9 +20,9 @@ root = Tk()
 root.resizable(width=False, height=False)
 root.geometry("400x300")
 
-img = PhotoImage(file = "./rsrc/rasmus.gif")
-cake = PhotoImage(file = "./rsrc/cake.gif")
-bg = PhotoImage(file = "./rsrc/bg.gif")
+img = PhotoImage(file = resourcePath + "rasmus.gif")
+cake = PhotoImage(file = resourcePath + "cake.gif")
+bg = PhotoImage(file = resourcePath + "bg.gif")
 
 bgl = Label(image=bg, width = 400, height = 300)
 bgl.image = bg # keep a reference!
@@ -47,6 +51,7 @@ cl5.image = cake
 
 cl6 = Label(image=cake, width = 40, height = 40)
 cl6.image = cake
+
 
 pts_str = StringVar()
 pts_label = Label(textvariable=pts_str)
