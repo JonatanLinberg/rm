@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>LSArchitecturePriority</key>
+	<array>
+		<string>x86_64</string>
+		<string>i386</string>
+	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.5.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.games</string>
+	<key>CFBundleIdentifier</key>
+	<string>grattis_rasmus</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleExecutable</key>
+	<string>rm.py</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Grattis Rasmus</string>
+	<key>CFBundleDisplayName</key>
+	<string>Grattis Rasmus</string>
+</dict>
+</plist>
