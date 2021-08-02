@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 from time import sleep
 from random import randint
-from os import system
 import sys
 from pygame import mixer
 
@@ -120,7 +119,6 @@ root.bind('<Right>', Right)
 root.bind('<space>', eat)
 root.bind('<Escape>', quit)
 
-system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 root.focus_set()
 root.after(100, startGame)
 mixer.music.play(-1)
