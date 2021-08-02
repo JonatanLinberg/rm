@@ -6,10 +6,19 @@ from random import randint
 import sys
 from pygame import mixer
 
+resourcePath = sys.path[0]+'/rsrc/'
+
+def getResource(file):
+	return resourcePath + file
+
+def MacOS_App_GetResource(file):
+	file = NSBundle.mainBundle().pathForResource_ofType_(file.split('.')[0], file.split('.')[1])
+	return file
+
 if (sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
-	resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
-else:
-	resourcePath = sys.path[0]+'/rsrc/'
+	from AppKit import NSBundle
+	getResource = MacOS_App_GetResource
+	
 pos = 3
 count = 1
 cakeArray = [False for c in range(0, 7)]
@@ -25,11 +34,11 @@ root.geometry("%dx%d" % (win_w, win_h))
 
 mixer.pre_init(44100, -16, 2, 4096)
 mixer.init()
-mixer.music.load(resourcePath + "mus.wav")
+mixer.music.load(getResource("mus.wav"))
 
-img_head = tk.PhotoImage(file = resourcePath + "rasmus.gif")
-img_cake = tk.PhotoImage(file = resourcePath + "cake.gif")
-img_bg = tk.PhotoImage(file = resourcePath + "bg.gif")
+img_head = tk.PhotoImage(file = getResource("rasmus.gif"))
+img_cake = tk.PhotoImage(file = getResource("cake.gif"))
+img_bg = tk.PhotoImage(file = getResource("bg.gif"))
 
 canvas = tk.Canvas(root, bd=0, highlightthickness=0, width=win_w, height=win_h)
 canvas.pack()
