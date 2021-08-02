@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
 import tkinter as tk
 from tkinter import messagebox
+from time import sleep
 from random import randint
 from os import system
 import sys
+from pygame import mixer
 
 if (sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
 	resourcePath = '/'.join(sys.path[0].split('/')[:-1]) + '/Resources/'
@@ -14,43 +17,31 @@ cakeArray = [False for c in range(0, 7)]
 points = 0
 cakecount = 0
 running = True
+win_w, win_h = 400, 300
+intro_speed = 10
 
 root = tk.Tk()
 root.resizable(width=False, height=False)
-root.geometry("400x300")
+root.geometry("%dx%d" % (win_w, win_h))
 
-img = tk.PhotoImage(file = resourcePath + "rasmus.gif")
-cake = tk.PhotoImage(file = resourcePath + "cake.gif")
-bg = tk.PhotoImage(file = resourcePath + "bg.gif")
+mixer.pre_init(44100, -16, 2, 4096)
+mixer.init()
+mixer.music.load(resourcePath + "mus.wav")
 
-bgl = tk.Label(image=bg, width = 400, height = 300)
-bgl.image = bg # keep a reference!
-bgl.pack()
+img_head = tk.PhotoImage(file = resourcePath + "rasmus.gif")
+img_cake = tk.PhotoImage(file = resourcePath + "cake.gif")
+img_bg = tk.PhotoImage(file = resourcePath + "bg.gif")
 
-label = tk.Label(image=img, width = 40, height = 40)
-label.image = img # keep a reference!
+canvas = tk.Canvas(root, bd=0, highlightthickness=0, width=win_w, height=win_h)
+canvas.pack()
 
-cl0 = tk.Label(image=cake, width = 40, height = 40)
-cl0.image = cake
+bg_id = canvas.create_image(0, 0, anchor='nw', image=img_bg)
 
-cl1 = tk.Label(image=cake, width = 40, height = 40)
-cl1.image = cake
+cake_ids = [-1 for c in range(0, 7)]
+for i, _ in enumerate(cake_ids):
+	cake_ids[i] = canvas.create_image(60+i*40, 100, anchor='nw', image=img_cake, state='hidden')
 
-cl2 = tk.Label(image=cake, width = 40, height = 40)
-cl2.image = cake
-
-cl3 = tk.Label(image=cake, width = 40, height = 40)
-cl3.image = cake
-
-cl4 = tk.Label(image=cake, width = 40, height = 40)
-cl4.image = cake
-
-cl5 = tk.Label(image=cake, width = 40, height = 40)
-cl5.image = cake
-
-cl6 = tk.Label(image=cake, width = 40, height = 40)
-cl6.image = cake
-
+head_id = canvas.create_image(180, win_h, anchor='nw', image=img_head)
 
 pts_str = tk.StringVar()
 pts_label = tk.Label(textvariable=pts_str)
@@ -65,11 +56,13 @@ def Left(e):
 	global pos
 	if pos > 0:
 		pos -= 1
+		canvas.move(head_id, -40, 0)
 
 def Right(e):
 	global pos
 	if pos < 6:
 		pos += 1
+		canvas.move(head_id, 40, 0)
 
 def eat(e):
 	global pos, points, cakeArray, cakecount
@@ -78,20 +71,8 @@ def eat(e):
 	else:
 		cakeArray[pos] = False
 		points += 1
-	if pos == 0:
-		cl0.place_forget()
-	if pos == 1:
-		cl1.place_forget()
-	if pos == 2:
-		cl2.place_forget()
-	if pos == 3:
-		cl3.place_forget()
-	if pos == 4:
-		cl4.place_forget()
-	if pos == 5:
-		cl5.place_forget()
-	if pos == 6:
-		cl6.place_forget()
+		canvas.itemconfigure(cake_ids[pos], state='hidden')
+
 	cakecount -= 1
 
 def quit(e):
@@ -102,6 +83,14 @@ def gameOver():
 	running = False
 	messagebox.showinfo("Game Over", "You ate " + str(points) + " cakes.")
 	root.quit()
+
+def startGame():
+	_, h = canvas.coords(head_id)
+	if (h > 200):
+		canvas.move(head_id, 0, -1)
+		root.after(intro_speed, startGame)
+	else:
+		root.after(20, loop)
 
 def loop():
 	global label, count, cakeArray, points, cakecount, running
@@ -116,26 +105,13 @@ def loop():
 				r = randint(0, 6)
 				if cakeArray[r] == False:
 					break
+			canvas.itemconfigure(cake_ids[r], state='normal')
 
-			if r == 0:
-				cl0.place(x = 60, y = 100)
-			if r == 1:
-				cl1.place(x = 100, y = 100)
-			if r == 2:
-				cl2.place(x = 140, y = 100)
-			if r == 3:
-				cl3.place(x = 180, y = 100)
-			if r == 4:
-				cl4.place(x = 220, y = 100)
-			if r == 5:
-				cl5.place(x = 260, y = 100)
-			if r == 6:
-				cl6.place(x = 300, y = 100)
 			cakecount += 1
 			cakeArray[r] = True	
 
-		label.place(x = 60 + (pos * 40), y = 200)
 		update_pts_label()
+		#paint canvas
 
 		root.after(20, loop)
 
@@ -146,5 +122,6 @@ root.bind('<Escape>', quit)
 
 system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 root.focus_set()
-root.after(100, loop)
+root.after(100, startGame)
+mixer.music.play(-1)
 root.mainloop()
