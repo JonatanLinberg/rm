@@ -1,7 +1,6 @@
-#!/usr/bin/env python2.7
-from Tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 from random import randint
-import tkMessageBox
 from os import system
 import sys
 
@@ -16,45 +15,45 @@ points = 0
 cakecount = 0
 running = True
 
-root = Tk()
+root = tk.Tk()
 root.resizable(width=False, height=False)
 root.geometry("400x300")
 
-img = PhotoImage(file = resourcePath + "rasmus.gif")
-cake = PhotoImage(file = resourcePath + "cake.gif")
-bg = PhotoImage(file = resourcePath + "bg.gif")
+img = tk.PhotoImage(file = resourcePath + "rasmus.gif")
+cake = tk.PhotoImage(file = resourcePath + "cake.gif")
+bg = tk.PhotoImage(file = resourcePath + "bg.gif")
 
-bgl = Label(image=bg, width = 400, height = 300)
+bgl = tk.Label(image=bg, width = 400, height = 300)
 bgl.image = bg # keep a reference!
 bgl.pack()
 
-label = Label(image=img, width = 40, height = 40)
+label = tk.Label(image=img, width = 40, height = 40)
 label.image = img # keep a reference!
 
-cl0 = Label(image=cake, width = 40, height = 40)
+cl0 = tk.Label(image=cake, width = 40, height = 40)
 cl0.image = cake
 
-cl1 = Label(image=cake, width = 40, height = 40)
+cl1 = tk.Label(image=cake, width = 40, height = 40)
 cl1.image = cake
 
-cl2 = Label(image=cake, width = 40, height = 40)
+cl2 = tk.Label(image=cake, width = 40, height = 40)
 cl2.image = cake
 
-cl3 = Label(image=cake, width = 40, height = 40)
+cl3 = tk.Label(image=cake, width = 40, height = 40)
 cl3.image = cake
 
-cl4 = Label(image=cake, width = 40, height = 40)
+cl4 = tk.Label(image=cake, width = 40, height = 40)
 cl4.image = cake
 
-cl5 = Label(image=cake, width = 40, height = 40)
+cl5 = tk.Label(image=cake, width = 40, height = 40)
 cl5.image = cake
 
-cl6 = Label(image=cake, width = 40, height = 40)
+cl6 = tk.Label(image=cake, width = 40, height = 40)
 cl6.image = cake
 
 
-pts_str = StringVar()
-pts_label = Label(textvariable=pts_str)
+pts_str = tk.StringVar()
+pts_label = tk.Label(textvariable=pts_str)
 pts_label.place(x=0, y=0)
 
 
@@ -101,7 +100,7 @@ def quit(e):
 def gameOver():
 	global running
 	running = False
-	tkMessageBox.showinfo("Game Over", "You ate " + str(points) + " cakes.")
+	messagebox.showinfo("Game Over", "You ate " + str(points) + " cakes.")
 	root.quit()
 
 def loop():
@@ -148,4 +147,4 @@ root.bind('<Escape>', quit)
 system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 root.focus_set()
 root.after(100, loop)
-mainloop()
+root.mainloop()
