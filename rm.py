@@ -36,6 +36,8 @@ mixer.pre_init(44100, -16, 2, 4096)
 mixer.init()
 mixer.music.load(getResource("mus.wav"))
 
+eat_sound = mixer.Sound(getResource("eat.wav"))
+
 img_head = tk.PhotoImage(file = getResource("rasmus.gif"))
 img_cake = tk.PhotoImage(file = getResource("cake.gif"))
 img_bg = tk.PhotoImage(file = getResource("bg.gif"))
@@ -52,6 +54,7 @@ for i, _ in enumerate(cake_ids):
 head_id = canvas.create_image(180, win_h, anchor='nw', image=img_head)
 
 pts_str = tk.StringVar()
+pts_str.set("You have eaten 0 cakes.")
 pts_label = tk.Label(textvariable=pts_str)
 pts_label.place(x=0, y=0)
 
@@ -77,6 +80,7 @@ def eat(e):
 	if cakeArray[pos] == False:
 		gameOver()
 	else:
+		eat_sound.play()
 		cakeArray[pos] = False
 		points += 1
 		canvas.itemconfigure(cake_ids[pos], state='hidden')
