@@ -4,6 +4,7 @@ from tkinter import messagebox
 from time import sleep
 from random import randint
 import sys
+import platform
 from pygame import mixer
 
 resourcePath = sys.path[0]+'/rsrc/'
@@ -15,7 +16,7 @@ def MacOS_App_GetResource(file):
 	file = NSBundle.mainBundle().pathForResource_ofType_(file.split('.')[0], file.split('.')[1])
 	return file
 
-if (sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
+if (platform.system() == "Darwin" and sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
 	from AppKit import NSBundle
 	getResource = MacOS_App_GetResource
 	
