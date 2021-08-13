@@ -25,7 +25,7 @@ count = 1
 cakeArray = [False for c in range(0, 7)]
 points = 0
 cakecount = 0
-running = True
+running = False
 win_w, win_h = 400, 300
 intro_speed = 10
 
@@ -65,26 +65,29 @@ def update_pts_label():
 	pts_str.set("You have eaten %d cakes."%(points))
 
 def Left(e):
-	global pos
-	if pos > 0:
-		pos -= 1
-		canvas.move(head_id, -40, 0)
+	global pos, running
+	if (running):
+		if pos > 0:
+			pos -= 1
+			canvas.move(head_id, -40, 0)
 
 def Right(e):
-	global pos
-	if pos < 6:
-		pos += 1
-		canvas.move(head_id, 40, 0)
+	global pos, running
+	if (running):
+		if pos < 6:
+			pos += 1
+			canvas.move(head_id, 40, 0)
 
 def eat(e):
-	global pos, points, cakeArray, cakecount
-	if cakeArray[pos] == False:
-		gameOver()
-	else:
-		eat_sound.play()
-		cakeArray[pos] = False
-		points += 1
-		canvas.itemconfigure(cake_ids[pos], state='hidden')
+	global pos, points, cakeArray, cakecount, running
+	if (running):
+		if cakeArray[pos] == False:
+			gameOver()
+		else:
+			eat_sound.play()
+			cakeArray[pos] = False
+			points += 1
+			canvas.itemconfigure(cake_ids[pos], state='hidden')
 
 	cakecount -= 1
 
@@ -98,11 +101,13 @@ def gameOver():
 	root.quit()
 
 def startGame():
+	global running
 	_, h = canvas.coords(head_id)
 	if (h > 200):
 		canvas.move(head_id, 0, -1)
 		root.after(intro_speed, startGame)
 	else:
+		running = True
 		root.after(20, loop)
 
 def loop():
