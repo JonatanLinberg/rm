@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
+#!/Users/jonatanlinberg/.pyenv/versions/3.6.12/bin/python
 import tkinter as tk
+from PIL import ImageTk, Image
 from tkinter import messagebox
 from time import sleep
 from random import randint
@@ -9,16 +10,16 @@ from pygame import mixer
 
 resourcePath = sys.path[0]+'/rsrc/'
 
-def getResource(file):
+def getResourcePath(file):
 	return resourcePath + file
 
-def MacOS_App_GetResource(file):
+def MacOS_App_GetResourcePath(file):
 	file = NSBundle.mainBundle().pathForResource_ofType_(file.split('.')[0], file.split('.')[1])
 	return file
 
 if (platform.system() == "Darwin" and sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
 	from AppKit import NSBundle
-	getResource = MacOS_App_GetResource
+	getResourcePath = MacOS_App_GetResourcePath
 	
 pos = 3
 count = 1
@@ -35,13 +36,13 @@ root.geometry("%dx%d" % (win_w, win_h))
 
 mixer.pre_init(44100, -16, 2, 4096)
 mixer.init()
-mixer.music.load(getResource("mus.wav"))
+mixer.music.load(getResourcePath("mus.wav"))
 
-eat_sound = mixer.Sound(getResource("eat.wav"))
+eat_sound = mixer.Sound(getResourcePath("eat.wav"))
 
-img_head = tk.PhotoImage(file = getResource("rasmus.gif"))
-img_cake = tk.PhotoImage(file = getResource("cake.gif"))
-img_bg = tk.PhotoImage(file = getResource("bg.gif"))
+img_head = ImageTk.PhotoImage(Image.open(getResourcePath("rasmus.png")).convert('RGBA'))
+img_cake = ImageTk.PhotoImage(Image.open(getResourcePath("cake.png")).convert('RGBA'))
+img_bg = ImageTk.PhotoImage(Image.open(getResourcePath("bg.png")))
 
 canvas = tk.Canvas(root, bd=0, highlightthickness=0, width=win_w, height=win_h)
 canvas.pack()
