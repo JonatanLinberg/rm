@@ -13,13 +13,10 @@ resourcePath = sys.path[0]+'/rsrc/'
 def getResourcePath(file):
 	return resourcePath + file
 
-def MacOS_App_GetResourcePath(file):
-	file = NSBundle.mainBundle().pathForResource_ofType_(file.split('.')[0], file.split('.')[1])
-	return file
-
-if (platform.system() == "Darwin" and sys.path[0].split('/')[-1] == "MacOS"):		#Inside MacOS Application
+if (platform.system() == "Darwin"):		#Inside MacOS Application
 	from AppKit import NSBundle
-	getResourcePath = MacOS_App_GetResourcePath
+	if (NSBundle.mainBundle().bundleIdentifier() == "grattis_rasmus"):
+		resourcePath = str(NSBundle.mainBundle().resourcePath() + '/rsrc/')
 	
 pos = 3
 count = 1
