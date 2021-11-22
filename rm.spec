@@ -24,7 +24,7 @@ exe = EXE(pyz,
           a.scripts, 
           [],
           exclude_binaries=True,
-          name='rm',
+          name='Grattis Rasmus',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -41,8 +41,8 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='rm')
+               name='Grattis Rasmus')
 app = BUNDLE(coll,
-             name='rm.app',
-             icon=None,
-             bundle_identifier=None)
+             name='Grattis Rasmus.app',
+             icon='build_rsrc/AppIcon.icns',
+             bundle_identifier='grattis_rasmus')
