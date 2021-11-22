@@ -17,13 +17,7 @@ if (platform.system() == "Darwin"):		#Inside MacOS Application
 	from AppKit import NSBundle
 	if (NSBundle.mainBundle().bundleIdentifier() == "grattis_rasmus"):
 		resourcePath = str(NSBundle.mainBundle().resourcePath() + '/rsrc/')
-	
-pos = 3
-count = 1
-cakeArray = [False for c in range(0, 7)]
-points = 0
-cakecount = 0
-running = False
+
 win_w, win_h = 400, 300
 intro_speed = 10
 
@@ -50,7 +44,7 @@ cake_ids = [-1 for c in range(0, 7)]
 for i, _ in enumerate(cake_ids):
 	cake_ids[i] = canvas.create_image(60+i*40, 100, anchor='nw', image=img_cake, state='hidden')
 
-head_id = canvas.create_image(180, win_h, anchor='nw', image=img_head)
+head_id = canvas.create_image(0, 0, anchor='nw', image=img_head)
 
 pts_str = tk.StringVar()
 pts_str.set("You have eaten 0 cakes.")
@@ -61,6 +55,7 @@ pts_label.place(x=0, y=0)
 def update_pts_label():
 	global points
 	pts_str.set("You have eaten %d cakes."%(points))
+
 
 def Left(e):
 	global pos, running
@@ -95,8 +90,27 @@ def quit(e):
 def gameOver():
 	global running
 	running = False
-	messagebox.showinfo("Game Over", "You ate " + str(points) + " cakes.")
-	root.quit()
+	if (messagebox.askyesno("Game Over", "You ate " + str(points) + " cakes.\nWould you like to play again?")):
+		initGame()
+		root.after(20, startGame)
+	else:
+		root.quit()
+
+def initGame():
+	global pos, count, cakeArray, points, cakecount, running, win_h
+	pos = 3
+	count = 1
+	cakeArray = [False for c in range(0, 7)]
+	points = 0
+	cakecount = 0
+	running = False
+
+	## reset graphics
+	update_pts_label()
+	for i in range(len(cakeArray)):
+		canvas.itemconfigure(cake_ids[i], state='hidden')
+	hx, hy = canvas.coords(head_id)
+	canvas.move(head_id, 180-hx, win_h-hy)
 
 def startGame():
 	global running
@@ -127,8 +141,6 @@ def loop():
 			cakeArray[r] = True	
 
 		update_pts_label()
-		#paint canvas
-
 		root.after(20, loop)
 
 root.bind('<Left>', Left)
@@ -136,6 +148,7 @@ root.bind('<Right>', Right)
 root.bind('<space>', eat)
 root.bind('<Escape>', quit)
 
+initGame()
 root.focus_set()
 root.after(100, startGame)
 mixer.music.play(-1)
