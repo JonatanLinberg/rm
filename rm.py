@@ -16,7 +16,7 @@ def getResourcePath(file):
 if (platform.system() == "Darwin"):		#Inside MacOS Application
 	from AppKit import NSBundle
 	if (NSBundle.mainBundle().bundleIdentifier() == "grattis_rasmus"):
-		resourcePath = str(NSBundle.mainBundle().resourcePath() + '/rsrc/')
+		resourcePath = str(NSBundle.mainBundle().resourcePath() + '/')
 
 win_w, win_h = 400, 300
 intro_speed = 10

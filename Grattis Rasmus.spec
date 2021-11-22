@@ -7,7 +7,7 @@ block_cipher = None
 a = Analysis(['rm.py'],
              pathex=[],
              binaries=[],
-             datas=[('rsrc', 'rsrc')],
+             datas=[('rsrc', '.')],
              hiddenimports=[],
              hookspath=[],
              hooksconfig={},
@@ -33,7 +33,7 @@ exe = EXE(pyz,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
-          entitlements_file=None )
+          entitlements_file=None , icon='build_rsrc/AppIcon.icns')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
